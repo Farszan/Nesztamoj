@@ -7,28 +7,29 @@ GlyphWiki[5].
 
 List of included characters
 
-Jigmo fonts contains 141,457 characters (and spaces) defined
+Jigmo fonts contains 145,975 characters (and spaces) defined
 in the ISO/IEC 10646 standard / the Unicode standard.
 
-*** Non-kanji: 13,338 characters ***
+*** Non-kanji: 13,342 characters ***
 
-*** Kanji: 98.682 characters + 29,437 IVD characters ***
+*** Kanji: 102,998 characters + 29,635 IVD characters ***
 
-- U+4E00  .. U+9FFF  URO 20,992 chars (fully implemented)
-- U+3400  .. U+4DBF  Ext.A 6,592 chars (fully implemented)
+- U+4E00  .. U+9FFF  URO   20,992 chars (fully implemented)
+- U+3400  .. U+4DBF  Ext-A  6,592 chars (fully implemented)
 - U+20000 .. U+2A6DF Ext.B 42,720 chars (fully implemented)
-- U+2A700 .. U+2B739 Ext.C 4,154 chars (fully implemented)
-- U+2B740 .. U+2B81D Ext.D 222 chars (fully implemented)
-- U+2B820 .. U+2CEA1 Ext.E 5,762 chars (fully implemented)
-- U+2CEB0 .. U+2EBE0 Ext.F 7,473 chars (fully implemented)
-- U+30000 .. U+3134A Ext.G 4,939 chars (fully implemented)
-- U+31350 .. U+323AF Ext.H 4,192 chars (fully implemented)
+- U+2A700 .. U+2B73F Ext.C  4,160 chars (fully implemented)
+- U+2B740 .. U+2B81D Ext.D    222 chars (fully implemented)
+- U+2B820 .. U+2CEAD Ext.E  5,774 chars (fully implemented)
+- U+2CEB0 .. U+2EBE0 Ext.F  7,473 chars (fully implemented)
+- U+30000 .. U+3134A Ext.G  4,939 chars (fully implemented)
+- U+31350 .. U+323AF Ext.H  4,192 chars (fully implemented)
+- U+2EBF0 .. U+2EE5D Ext.I    622 chars (fully implemented)
+- U+323B0 .. U+33479 Ext.J  4,298 chars (fully implemented)
 - U+F900  .. U+FAD9  CJK Compatibility Ideographs 472 chars (fully
                      implemented)
 - U+2F800 .. U+2FA1D CJK Compatibility Ideographs Supplement 542 chars
                      (fully implemented)
-- IVD※   .. 2022-09-13版 29,437 chars (fully implemented)
-- U+2EBF0 .. U+2EE5D Ext.I candidate 622 chars (test implementation)
+- IVD*    .. ver. 2025-07-14 29,635 chars (fully implemented)
 
 IVD: Ideographic Variation Database[6]
 
@@ -37,7 +38,7 @@ Jigmo fonts are divided into three .ttf files as follows.
 *** Jigmo (Jigmo.ttf) : BMP, SMP ***
 
 - ASCII and non-kanji
-- CJK Unified Ideographs (URO, Ext.A) and these IVD
+- CJK Unified Ideographs (URO, Ext-A) and these IVD
 - CJK Compatibility Ideographs
 
 *** Jigmo2 (Jigmo2.ttf) : SIP ***
@@ -50,7 +51,7 @@ Jigmo fonts are divided into three .ttf files as follows.
 *** Jigmo3 (Jigmo3.ttf) : TIP ***
 
 - (ASCII)
-- CJK Unified Ideographs (Ext.H, Ext.H) and IVD (U+31350 U+E0100)
+- CJK Unified Ideographs (Ext.H, Ext.H, Ext.J) and IVD (U+30654 x3, U+31350 x1)
 
 
 Contact us
@@ -88,50 +89,50 @@ KAGEシステム、Clipper, FontForgeおよびTTXを利用しています。
 含まれる文字種
 
 このフォントに含まれているグリフはISO/IEC 10646およびUnicode標準に収
-録されている141,457字となります。一部はUnicode 15.1の追加候補を試験的
-に収録しています。詳細は以下の通りです。
+録されている145,975字となります。2025年9月に公開されたUnicode 17.0に
+対応しています。詳細は以下の通りです。
 
-*** 漢字 98,682字 + IVD 29,437字 ***
+*** 漢字 102,998字 + IVD 29,635字 ***
 
-- U+4E00  .. U+9FFF  URO 20,992字 完全収録
-- U+3400  .. U+4DBF  Ext.A 6,592字 完全収録
+- U+4E00  .. U+9FFF  URO   20,992字 完全収録
+- U+3400  .. U+4DBF  Ext-A  6,592字 完全収録
 - U+20000 .. U+2A6DF Ext.B 42,720字 完全収録
-- U+2A700 .. U+2B739 Ext.C 4,154字 完全収録
-- U+2B740 .. U+2B81D Ext.D 222字 完全収録
-- U+2B820 .. U+2CEA1 Ext.E 5,762字 完全収録
-- U+2CEB0 .. U+2EBE0 Ext.F 7,473字 完全収録
-- U+30000 .. U+3134A Ext.G 4,939字 完全収録
-- U+31350 .. U+323AF Ext.H 4,192字 完全収録
+- U+2A700 .. U+2B73F Ext.C  4,160字 完全収録
+- U+2B740 .. U+2B81D Ext.D    222字 完全収録
+- U+2B820 .. U+2CEAD Ext.E  5,774字 完全収録
+- U+2CEB0 .. U+2EBE0 Ext.F  7,473字 完全収録
+- U+30000 .. U+3134A Ext.G  4,939字 完全収録
+- U+31350 .. U+323AF Ext.H  4,192字 完全収録
+- U+2EBF0 .. U+2EE5D Ext.I    622字 完全収録 
+- U+323B0 .. U+33479 Ext.J  4,298字 完全収録
 - U+F900  .. U+FAD9  互換文字 472字 完全収録
 - U+2F800 .. U+2FA1D 互換補助 542字 完全収録
-- IVD※   .. 2022-09-13版 29,437字 完全収録
-- U+2EBF0 .. U+2EE5D Ext.I候補 622字 試験収録 
+- IVD※   .. 2025-07-14版  29,635字 完全収録
 
 ※IVD : Ideographic Variation Database
 
-*** 非漢字 13,338字 ***
+*** 非漢字 13,342字 ***
 
-- ASCIIおよびCJKに関係するもの（一部はUnicode 15.1の追加候補を試験収録）
+- ASCIIおよびCJKに関係するもの
 
 このフォントは、以下のように３分割となっています。
 
 *** フォント名：Jigmo（Jigmo.ttf）：第0面（BMP）、第1面（SMP）***
 
 - ASCIIほか非漢字
-- CJK統合漢字（URO, Ext.A）およびそのIVD
+- CJK統合漢字（URO, Ext-A）およびそのIVD
 - CJK互換漢字 
 
 *** フォント名：Jigmo2（Jigmo2.ttf）：第2面（SIP）***
 
 - （ASCII）
-- CJK統合漢字（Ext.B, C, D, E, F）およびそのIVD
-- CJK統合漢字候補（Ext.I）
+- CJK統合漢字（Ext.B, C, D, E, F, I）およびそのIVD
 - CJK互換漢字補助 
 
 *** フォント名：Jigmo3（Jigmo3.ttf）：第3面（TIP）***
 
 - （ASCII）
--  CJK統合漢字（Ext.G, H）およびIVD（U+31350 U+E0100の1字） 
+-  CJK統合漢字（Ext.G, H, J）およびIVD（U+30654 x3, U+31350 x1）
 
 
 連絡先など
@@ -162,6 +163,7 @@ KAGEシステム、Clipper, FontForgeおよびTTXを利用しています。
 変更履歴
 
 2023-08-16 最初のバージョン
+2025-09-12 Unicode 17.0およびIVD追加（CAAPH）に対応
 
 ※すべてのグリフに対するすべての変更履歴はグリフウィキで確認すること
 ができます。

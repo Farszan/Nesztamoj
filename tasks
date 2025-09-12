@@ -9,8 +9,8 @@ ASCII="ascii.txt"
 TEMP="temp.txt"
 ERR="stderr.txt"
 
-URL1="https://www.unicode.org/Public/15.1.0/ucd/UnicodeData.txt"
-URL2="https://unicode.org/ivd/data/2022-09-13/IVD_Sequences.txt"
+URL1="https://www.unicode.org/Public/17.0.0/ucd/UnicodeData.txt"
+URL2="https://unicode.org/ivd/data/2025-07-14/IVD_Sequences.txt"
 
 DATA1="UnicodeData.txt"
 DATA2="IVD_Sequences.txt"
