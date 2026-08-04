@@ -14,8 +14,10 @@ URL2="https://unicode.org/ivd/data/2025-07-14/IVD_Sequences.txt"
 
 DATA1="UnicodeData.txt"
 DATA2="IVD_Sequences.txt"
+DATA3="ExtendedGlyphs.txt"
 
 KEYWORDS="keywords.txt"
+EXTENDED_GROUP="ExtendedGroupList.txt"
 
 OUT3="use.txt"
 OUT4="notuse.txt"
@@ -33,7 +35,19 @@ if [ ! -e $DIR/$DATA2 ]; then
   wget -nv $URL2 -O $DIR/$DATA2 2>> $DIR/$ERR
 fi
 
-echo "02:収録コードポイントの生成"
+echo "02:拡張グループファイルの取得と結合"
+rm -f $DIR/$DATA3
+if [ -f "$EXTENDED_GROUP" ]; then
+  grep -v '^\s*#' "$EXTENDED_GROUP" | sed '/^\s*$/d' | while read -r url; do
+    if [ -n "$url" ]; then
+      echo "  Downloading: $url"
+      wget -qO- "$url" >> $DIR/$DATA3 2>> $DIR/$ERR
+      echo "" >> $DIR/$DATA3
+    fi
+  done
+fi
+
+echo "03:収録コードポイントの生成"
 rm -f $DIR/$TEMP
 cat $KEYWORDS | while read LINE
 do
@@ -42,25 +56,36 @@ done
 sort $DIR/$TEMP | uniq > $DIR/$OUT3
 rm $DIR/$TEMP
 
-echo "03:非収録コードポイントの生成"
+echo "04:非収録コードポイントの生成"
 grep -F -v $DIR/$DATA1 -f $DIR/$OUT3 > $DIR/$OUT4
 
-echo "04:コードポイントリスト(UCS)の生成"
+echo "05:コードポイントリスト(UCS)の生成"
 rm -f $DIR/$OUT5
 python3 makecodepoint.py $DIR/$OUT3 $DIR/$OUT5
 
-echo "05:コードポイントリスト(IVS)の生成"
+echo "06:コードポイントリスト(IVS)の生成"
 grep -v -e "^#" $DIR/$DATA2 | awk -F'[; ]' '{printf "u%s-u%s\n",tolower($1),tolower($2)}' > $DIR/$TEMP
 sort $DIR/$TEMP | uniq >> $DIR/$OUT5
 rm $DIR/$TEMP
 
-echo "06:コードポイントリストにASCIIを追加"
+echo "07:追加コードポイントの取得（重複排除）"
+if [ -f "$DIR/$DATA3" ]; then
+  # 1列目を抽出し、コメント行・空行・CRを除去して一時ファイルへ出力
+  awk -F';' '{print $1}' "$DIR/$DATA3" | grep -v '^\s*#' | sed 's/\r//g' | sed '/^\s*$/d' > $DIR/ext_temp.txt
+  
+  # 既に $OUT5 に存在するコードポイント（キーワード選定分）を除外して追記
+  grep -v -F -x -f $DIR/$OUT5 $DIR/ext_temp.txt >> $DIR/$OUT5
+  
+  rm -f $DIR/ext_temp.txt
+fi
+
+echo "08:コードポイントリストにASCIIを追加"
 cat $ASCII >> $DIR/$OUT5
 
-echo "07:グリフSVGファイルの取得"
-python3 getglyphs.py $GLYPH $DIR/$OUT5
+echo "09:グリフSVGファイルの取得"
+python3 getglyphs.py $GLYPH $DIR/$OUT5 $DIR/$DATA3
 
-echo "08:グリフSVGファイルの確認"
+echo "10:グリフSVGファイルの確認"
 files=`find work/glyph -name *.svg | wc -l`
 lines=`cat work/codepoint.txt | wc -l`
 if [ $files -ne $lines ]; then
@@ -68,18 +93,24 @@ if [ $files -ne $lines ]; then
     exit
 fi
 
-echo "09:フォント生成 #1"
+echo "11:フォント生成 #1"
 perl makefont.pl
 
-echo "10:フォント生成 #2"
+echo "12:フォント生成 #2"
 perl makefont.pl 2
 
-echo "11:フォント生成 #3"
+echo "13:フォント生成 #3"
 perl makefont.pl 3
 
-echo "12:グリフリストの生成"
+echo "14:フォント生成 #4"
+perl makefont.pl f
+
+echo "15:フォント生成 #5"
+perl makefont.pl a
+
+echo "16:グリフリストの生成"
 perl glyphlist.pl > $BUILD/glyphlist.html
 
-echo "13:ドキュメントと生成フォントの配置"
+echo "17:ドキュメントと生成フォントの配置"
 cp $DOC/* $BUILD/
 cp $DIR/font/*.ttf $BUILD/

@@ -2,16 +2,20 @@
 
 use utf8;
 
-my $version = "2025-09-12";
-my $author = "Koichi Kamichi";
+my $version = "2026-08-04";
+my $author = "Farszan";
 
 my $fontname;
 if($ARGV[0] eq "2"){
-  $fontname = "Jigmo2";
+  $fontname = "Chelzas_B";
 } elsif($ARGV[0] eq "3"){
-  $fontname = "Jigmo3";
+  $fontname = "Chelzas_C";
+} elsif($ARGV[0] eq "a"){
+  $fontname = "Chelzas_E";
+} elsif($ARGV[0] eq "f"){
+  $fontname = "Chelzas_D";
 } else {
-  $fontname = "Jigmo";
+  $fontname = "Chelzas_A";
 }
 
 $FONTFORGE = "fontforge";
@@ -28,15 +32,18 @@ if(-e "$FONT_DIR/$fontname.ttf"){
   exit;
 }
 
-$hankaku_data = `wget -nv https://glyphwiki.org/wiki/Group:HalfwidthGlyphs-BMP?action=edit -O- 2>> $WORK_DIR/stderr.txt`;
+$hankaku_data = `wget -nv https://raw.githubusercontent.com/Farszan/Chelzas-GlyphWiki/main/Group/HalfwidthGlyphs-BMP.txt -O- 2>> $WORK_DIR/stderr.txt`;
 utf8::decode($hankaku_data);
-$temp = `wget -nv https://glyphwiki.org/wiki/Group:HalfwidthGlyphs-SMP?action=edit -O- 2>> $WORK_DIR/stderr.txt`;
+$temp = `wget -nv https://raw.githubusercontent.com/Farszan/Chelzas-GlyphWiki/main/Group/HalfwidthGlyphs-SMP.txt -O- 2>> $WORK_DIR/stderr.txt`;
+utf8::decode($temp);
+$hankaku_data = $hankaku_data."\n".$temp;
+$temp = `wget -nv https://raw.githubusercontent.com/Farszan/Chelzas-GlyphWiki/main/Group/farszanov_Halfwidth-Nech.txt -O- 2>> $WORK_DIR/stderr.txt`;
 utf8::decode($temp);
 $hankaku_data = $hankaku_data."\n".$temp;
 
-$nsgh = `wget -nv https://glyphwiki.org/wiki/Group:NonSpacingGlyphs-Halfwidth?action=edit -O- 2>> $WORK_DIR/stderr.txt`;
+$nsgh = `wget -nv https://raw.githubusercontent.com/Farszan/Chelzas-GlyphWiki/main/Group/NonSpacingGlyphs-Halfwidth.txt -O- 2>> $WORK_DIR/stderr.txt`;
 utf8::decode($nsgh);
-$nsgf = `wget -nv https://glyphwiki.org/wiki/Group:NonSpacingGlyphs-Fullwidth?action=edit -O- 2>> $WORK_DIR/stderr.txt`;
+$nsgf = `wget -nv https://raw.githubusercontent.com/Farszan/Chelzas-GlyphWiki/main/Group/NonSpacingGlyphs-Fullwidth.txt -O- 2>> $WORK_DIR/stderr.txt`;
 utf8::decode($nsgf);
 
 my $baseline = 30;
@@ -52,6 +59,9 @@ while(<$fh>){
     if($_ =~ m/^(u2[0-9a-f]{4})\n$/){
       $glyphlist{$1} = $1;
     }
+    if($_ =~ m/^(u2[0-9a-f]{4}-uf8[0-9a-f]{2})\n$/){
+      $ivslist{$1} = $1;
+    }
     if($_ =~ m/^(u2[0-9a-f]{4}-ue01[0-9a-f]{2})\n$/){
       $ivslist{$1} = $1;
     }
@@ -62,7 +72,36 @@ while(<$fh>){
     if($_ =~ m/^(u3[0-9a-f]{4})\n$/){
       $glyphlist{$1} = $1;
     }
+    if($_ =~ m/^(u3[0-9a-f]{4}-uf8[0-9a-f]{2})\n$/){
+      $ivslist{$1} = $1;
+    }
     if($_ =~ m/^(u3[0-9a-f]{4}-ue01[0-9a-f]{2})\n$/){
+      $ivslist{$1} = $1;
+    }
+  } elsif($ARGV[0] eq "a"){
+    if($_ =~ m/^(u00[0-9a-f]{2})\n$/){
+      $glyphlist{$1} = $1;
+    }
+    if($_ =~ m/^(ua[0-9a-f]{4})\n$/){
+      $glyphlist{$1} = $1;
+    }
+    if($_ =~ m/^(ua[0-9a-f]{4}-uf8[0-9a-f]{2})\n$/){
+      $ivslist{$1} = $1;
+    }
+    if($_ =~ m/^(ua[0-9a-f]{4}-ue01[0-9a-f]{2})\n$/){
+      $ivslist{$1} = $1;
+    }
+  } elsif($ARGV[0] eq "f"){
+    if($_ =~ m/^(u00[0-9a-f]{2})\n$/){
+      $glyphlist{$1} = $1;
+    }
+    if($_ =~ m/^(uf[0-9a-f]{4})\n$/){
+      $glyphlist{$1} = $1;
+    }
+    if($_ =~ m/^(uf[0-9a-f]{4}-uf8[0-9a-f]{2})\n$/){
+      $ivslist{$1} = $1;
+    }
+    if($_ =~ m/^(uf[0-9a-f]{4}-ue01[0-9a-f]{2})\n$/){
       $ivslist{$1} = $1;
     }
   } else {
@@ -71,6 +110,9 @@ while(<$fh>){
     }
     if($_ =~ m/^(u1[0-9a-f]{4})\n$/){
       $glyphlist{$1} = $1;
+    }
+    if($_ =~ m/^(u[0-9a-f]{4}-uf8[0-9a-f]{2})\n$/){
+      $ivslist{$1} = $1;
     }
     if($_ =~ m/^(u[0-9a-f]{4}-ue01[0-9a-f]{2})\n$/){
       $ivslist{$1} = $1;
@@ -82,6 +124,10 @@ close $fh;
 if($ARGV[0] eq "2"){
   $glyphlist{"u4e00"} = "u4e00";
 } elsif($ARGV[0] eq "3"){
+  $glyphlist{"u4e00"} = "u4e00";
+} elsif($ARGV[0] eq "a"){
+  $glyphlist{"u4e00"} = "u4e00";
+} elsif($ARGV[0] eq "f"){
   $glyphlist{"u4e00"} = "u4e00";
 } else {
   $glyphlist{"u20000"} = "u20000";
