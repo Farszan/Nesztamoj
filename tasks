@@ -26,7 +26,7 @@ OUT5="codepoint.txt"
 mkdir -p $DIR
 mkdir -p $BUILD
 
-rm -f $DIR/strerr.txt
+rm -f $DIR/$ERR
 echo "01:unicode.org からデータの取得"
 if [ ! -e $DIR/$DATA1 ]; then
   wget -nv $URL1 -O $DIR/$DATA1 2>> $DIR/$ERR
@@ -54,10 +54,10 @@ do
   grep "$LINE" $DIR/$DATA1 | grep -v FILLER | grep -v SPACE >> $DIR/$TEMP
 done
 sort $DIR/$TEMP | uniq > $DIR/$OUT3
-rm $DIR/$TEMP
+rm -f $DIR/$TEMP
 
 echo "04:非収録コードポイントの生成"
-grep -F -v $DIR/$DATA1 -f $DIR/$OUT3 > $DIR/$OUT4
+grep -F -v -f $DIR/$OUT3 $DIR/$DATA1 > $DIR/$OUT4
 
 echo "05:コードポイントリスト(UCS)の生成"
 rm -f $DIR/$OUT5
@@ -66,7 +66,7 @@ python3 makecodepoint.py $DIR/$OUT3 $DIR/$OUT5
 echo "06:コードポイントリスト(IVS)の生成"
 grep -v -e "^#" $DIR/$DATA2 | awk -F'[; ]' '{printf "u%s-u%s\n",tolower($1),tolower($2)}' > $DIR/$TEMP
 sort $DIR/$TEMP | uniq >> $DIR/$OUT5
-rm $DIR/$TEMP
+rm -f $DIR/$TEMP
 
 echo "07:追加コードポイントの取得（重複排除）"
 if [ -f "$DIR/$DATA3" ]; then
@@ -86,8 +86,8 @@ echo "09:グリフSVGファイルの取得"
 python3 getglyphs.py $GLYPH $DIR/$OUT5 $DIR/$DATA3
 
 echo "10:グリフSVGファイルの確認"
-files=`find work/glyph -name *.svg | wc -l`
-lines=`cat work/codepoint.txt | wc -l`
+files=`find $GLYPH -name *.svg | wc -l`
+lines=`cat $DIR/$OUT5 | wc -l`
 if [ $files -ne $lines ]; then
     echo "グリフSVGファイル数とコードポイント数が一致しません。終了します。"
     exit
@@ -113,4 +113,4 @@ perl glyphlist.pl > $BUILD/glyphlist.html
 
 echo "17:ドキュメントと生成フォントの配置"
 cp $DOC/* $BUILD/
-cp $DIR/font/*.ttf $BUILD/
+cp $FONT/*.ttf $BUILD/
