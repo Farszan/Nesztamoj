@@ -29,7 +29,7 @@ git clone https://github.com/farszan/Nesztamoj
 　実行します。
 
 ```
-cd Chelzas
+cd Nesztamoj
 ./tasks
 ```
 
