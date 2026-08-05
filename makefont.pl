@@ -181,47 +181,81 @@ foreach(sort(keys(%glyphlist))){
 }
 
 if(scalar(keys(%ivslist)) > 0){
-  $ivs_offset = 0x100000;
+  $ivs_offset = 0x90000;
   open my $fh2, ">$FONT_DIR/$fontname.ivs";
   print $fh2 "<cmap_format_14 platformID=\"0\" platEncID=\"5\" format=\"14\" length=\"0\" numVarSelectorRecords=\"0\">\n";
-  foreach(sort(keys(%ivslist))){
-    my $ucswithivs = $_;
+
+  # 1. 基底文字ごとに IVS リストをグループ化
+  my %base_to_ivs = ();
+  foreach my $ucswithivs (keys %ivslist) {
     my @temp = split(/-/, $ucswithivs);
-    my $ucswithoutivs = $temp[0];
-    my $uv = "0x".substr($temp[0], 1);
-    my $uvs = "0x".substr($temp[1], 1);
+    my $base = $temp[0];
+    push @{$base_to_ivs{$base}}, $ucswithivs;
+  }
+
+  # 2. 基底文字ごとに判定・処理
+  foreach my $ucswithoutivs (sort keys %base_to_ivs) {
+    # 同一基底文字内における既出 SVG との対応表 (SVG絶対パス => 割り当て済み cpname)
+    my %seen_svgs = ();
     
-    my $name = $ivslist{$ucswithivs};
-    my $dir = "$GLYPH_DIR/".substr($name,0,length($name)-10)."/".substr($name,0,length($name)-9);
+    # 基底文字のデフォルト cpname
+    my $base_cpname = (length($ucswithoutivs) > 5) ? "u".uc(substr($ucswithoutivs, 1)) : "uni".uc(substr($ucswithoutivs, 1));
     
-    if($dummy = `diff $dir/$ucswithivs.svg $dir/$ucswithoutivs.svg`){
-      my $cp = sprintf("0u%x", $ivs_offset);
-      my $cpname = "u".uc(substr($cp, 2));
+    # 基底文字の SVG パス
+    my $base_dir = "$GLYPH_DIR/".substr($ucswithoutivs,0,length($ucswithoutivs)-3)."/".substr($ucswithoutivs,0,length($ucswithoutivs)-2);
+    my $base_svg = "$base_dir/$ucswithoutivs.svg";
+
+    # IVS を昇順ソートして順番に評価
+    foreach my $ucswithivs (sort @{$base_to_ivs{$ucswithoutivs}}) {
+      my @temp = split(/-/, $ucswithivs);
+      my $uv = "0x".substr($temp[0], 1);
+      my $uvs = "0x".substr($temp[1], 1);
       
-      print $fh qq|Print($cp)\n|;
-      print $fh qq|Select($cp)\n|;
-      print $fh qq|Import("$dir/$ivslist{$ucswithivs}.svg")\n|;
-#      print $fh qq|Simplify()\n|;
-      print $fh qq|Scale(105,105,512,307)\n|;
-      print $fh qq|SetWidth(1024)\n|;
-      print $fh qq|Move(0, $baseline)\n|;
-      print $fh qq|SetVWidth(1024)\n|;
-      print $fh qq|RoundToInt()\n|;
-      print $fh qq|DontAutoHint()\n|;
-      print $fh qq|ClearHints()\n|;
-      print $fh qq|AutoInstr()\n|;
-      
-      print $fh2 "<map uvs=\"$uvs\" uv=\"$uv\" name=\"$cpname\"/>\n";
-      
-      $ivs_offset++;
-    } else {
-      my $cpname;
-      if(length($ucswithoutivs) > 5){
-        $cpname = "u".uc(substr($ucswithoutivs, 1));
-      } else {
-        $cpname = "uni".uc(substr($ucswithoutivs, 1));
+      my $name = $ivslist{$ucswithivs};
+      my $dir = "$GLYPH_DIR/".substr($name,0,length($name)-10)."/".substr($name,0,length($name)-9);
+      my $target_svg = "$dir/$ucswithivs.svg";
+
+      # A. 基底文字と比較（一致していれば基底文字の cpname を利用）
+      if (!`diff $target_svg $base_svg`) {
+        print $fh2 "<map uvs=\"$uvs\" uv=\"$uv\" name=\"$base_cpname\"/>\n";
+        next;
       }
-      print $fh2 "<map uvs=\"$uvs\" uv=\"$uv\" name=\"$cpname\"/>\n";
+
+      # B. 同一基底文字の先行 IVS と比較（一致していればその GID/cpname を再利用）
+      my $matched_cpname = undef;
+      foreach my $prev_svg (keys %seen_svgs) {
+        if (!`diff $target_svg $prev_svg`) {
+          $matched_cpname = $seen_svgs{$prev_svg};
+          last;
+        }
+      }
+
+      if (defined $matched_cpname) {
+        print $fh2 "<map uvs=\"$uvs\" uv=\"$uv\" name=\"$matched_cpname\"/>\n";
+      } else {
+        # C. 過去のいずれとも異なる新規字形の場合（新しい PUA GID を割り当て）
+        my $cp = sprintf("0u%x", $ivs_offset);
+        my $cpname = "u".uc(substr($cp, 2));
+        
+        print $fh qq|Print($cp)\n|;
+        print $fh qq|Select($cp)\n|;
+        print $fh qq|Import("$dir/$ivslist{$ucswithivs}.svg")\n|;
+#       print $fh qq|Simplify()\n|;
+        print $fh qq|Scale(105,105,512,307)\n|;
+        print $fh qq|SetWidth(1024)\n|;
+        print $fh qq|Move(0, $baseline)\n|;
+        print $fh qq|SetVWidth(1024)\n|;
+        print $fh qq|RoundToInt()\n|;
+        print $fh qq|DontAutoHint()\n|;
+        print $fh qq|ClearHints()\n|;
+        print $fh qq|AutoInstr()\n|;
+        
+        print $fh2 "<map uvs=\"$uvs\" uv=\"$uv\" name=\"$cpname\"/>\n";
+        
+        # 既出リストに登録
+        $seen_svgs{$target_svg} = $cpname;
+        $ivs_offset++;
+      }
     }
   }
   print $fh2 "</cmap_format_14>\n";
