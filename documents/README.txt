@@ -1,6 +1,6 @@
-About Chelzas fonts
+About Nesztamoj fonts
 
-Chelzas fonts are free kanji fonts. The KAGE system[1], Clipper[2], FontForge[3]
+Nesztamoj fonts are free kanji fonts. The KAGE system[1], Clipper[2], FontForge[3]
 and TTX[4] are used to create thise fonts. All glyphs in these fonts are from
 GlyphWiki[5].
 
@@ -27,42 +27,28 @@ List of included characters
 - U+2F800 .. U+2FA1D CJK Compatibility Ideographs Supplement
                               542 chars (fully implemented)
 - IVD*    .. ver. 2025-07-14 29,635 chars (fully implemented)
-- U+A0000 .. U+A0020 CJK Compatibility Ideographs Qaz
-                               33 chars (fully implemented)
-- U+F0000 .. U+F0163 CJK Unified Ideographs Qaz
-                              356 chars (fully implemented)
 
 IVD: Ideographic Variation Database[6]
 
-Chelzas fonts are divided into three .ttf files as follows.
+Nesztamoj fonts are divided into three .ttf files as follows.
 
-*** Chelzas_A (Chelzas_A.ttf) : BMP, SMP ***
+*** Nesztamoj (Nesztamoj.ttf) : BMP, SMP ***
 
 - ASCII and non-kanji
 - non-kanji (Nech)
 - CJK Unified Ideographs (URO, Ext-A) and these IVD
 - CJK Compatibility Ideographs
 
-*** Chelzas_B (Chelzas_B.ttf) : SIP ***
+*** Nesztamoj2 (Nesztamoj2.ttf) : SIP ***
 
 - (ASCII)
 - CJK Unified Ideographs (Ext.B, Ext.C, Ext.D, Ext.E, Ext.F, Ext.I) and these IVD
 - CJK Compatibility Ideographs Supplement
 
-*** Chelzas_C (Chelzas_C.ttf) : TIP ***
+*** Nesztamoj3 (Nesztamoj3.ttf) : TIP ***
 
 - (ASCII)
 - CJK Unified Ideographs (Ext.G, Ext.H, Ext.J) and these IVD
-
-*** Chelzas_D (Chelzas_D.ttf) : Plane15 ***
-
-- (ASCII)
-- CJK Unified Ideographs (Qaz)
-
-*** Chelzas_E (Chelzas_E.ttf) : Plane10 ***
-
-- (ASCII)
-- CJK Compatibility Ideographs (Qaz)
 
 
 Links
@@ -77,7 +63,7 @@ Links
 
 ----------
 
-Chelzas（Хелзас）フォントについて
+Neštamoj（Нештамој）フォントについて
 
 このフォントは自由かつ無償の漢字フリーフォントです。非漢字は一部のみ
 含まれます。明朝体フォント1ウェイトが収録されます。フォントの生成には
@@ -109,8 +95,6 @@ KAGEシステム、Clipper, FontForgeおよびTTXを利用しています。
 - U+F900  .. U+FAD9  互換文字 472字 完全収録
 - U+2F800 .. U+2FA1D 互換補助 542字 完全収録
 - IVD※   .. 2025-07-14版  29,635字 完全収録
-- U+A0000 .. U+A0020 互換Qaz   33字 完全収録
-- U+F0000 .. U+F0163 Qaz      356字 完全収録
 
 ※IVD : Ideographic Variation Database
 
@@ -120,32 +104,22 @@ KAGEシステム、Clipper, FontForgeおよびTTXを利用しています。
 
 このフォントは、以下のように３分割となっています。
 
-*** フォント名：Chelzas_A（Chelzas_A.ttf）：第0面（BMP）、第1面（SMP）***
+*** フォント名：Nesztamoj（Nesztamoj.ttf）：第0面（BMP）、第1面（SMP）***
 
 - ASCIIほか非漢字
 - CJK統合漢字（URO, Ext-A）およびそのIVD
 - CJK互換漢字 
 
-*** フォント名：Chelzas_B（Chelzas_B.ttf）：第2面（SIP）***
+*** フォント名：Nesztamoj2（Nesztamoj2.ttf）：第2面（SIP）***
 
 - （ASCII）
 - CJK統合漢字（Ext.B, C, D, E, F, I）およびそのIVD
 - CJK互換漢字補助 
 
-*** フォント名：Chelzas_C（Chelzas_C.ttf）：第3面（TIP）***
+*** フォント名：Nesztamoj3（Nesztamoj3.ttf）：第3面（TIP）***
 
 - （ASCII）
 -  CJK統合漢字（Ext.G, H, J）およびIVD
-
-*** フォント名：Chelzas_D（Chelzas_D.ttf）：第15面***
-
-- （ASCII）
-- CJK統合漢字（Qaz）
-
-*** フォント名：Chelzas_E（Chelzas_E.ttf）：第10面***
-
-- （ASCII） 
-- CJK互換漢字（Qaz）
 
 
 グリフウィキ（GlyphWiki）について
@@ -166,7 +140,7 @@ KAGEシステム、Clipper, FontForgeおよびTTXを利用しています。
 
 変更履歴
 
-2025-08-21
+2026-08-06
 
 ※すべてのグリフに対するすべての変更履歴はグリフウィキで確認すること
 ができます。

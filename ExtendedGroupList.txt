@@ -1,3 +1,2 @@
 https://raw.githubusercontent.com/Farszan/ExtendedGlyphs/main/Gen.txt
-https://raw.githubusercontent.com/Farszan/ExtendedGlyphs/main/Nech.txt
-https://raw.githubusercontent.com/Farszan/ExtendedGlyphs/main/Qaz.txt
+https://raw.githubusercontent.com/Farszan/ExtendedGlyphs/main/Rod.txt

@@ -13,8 +13,8 @@ while(<FH>){
 }
 close FH;
 
-print "<!DOCTYPE html><html><head><meta charset='utf8'><style>body{font-family:Chelzas_A,Chelzas_B,Chelzas_C,Chelzas_D,Chelzas_E;}span:hover{color:red;background-color:yellow;}</style></head><body>";
-print "<h1>Chelzas fonts</h1>font version: 2026-08-04<br><br>";
+print "<!DOCTYPE html><html><head><meta charset='utf8'><style>body{font-family:Nesztamoj,Nesztamoj2,Nesztamoj3;}span:hover{color:red;background-color:yellow;}</style></head><body>";
+print "<h1>Nesztamoj fonts</h1>font version: 2026-08-06<br><br>";
 
 foreach(0x00 .. 0xfff){
   $high = $_;
