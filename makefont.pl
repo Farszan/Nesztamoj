@@ -95,8 +95,6 @@ if($ARGV[0] eq "2"){
   $glyphlist{"u4e00"} = "u4e00";
 } elsif($ARGV[0] eq "3"){
   $glyphlist{"u4e00"} = "u4e00";
-} else {
-  $glyphlist{"u20000"} = "u20000";
 }
 
 open my $fh, ">:utf8", "$FONT_DIR/$fontname.scr";
