@@ -39,7 +39,12 @@ Nesztamoj fonts are divided into three .ttf files as follows.
 - CJK Unified Ideographs (URO, Ext-A) and these IVD
 - CJK Compatibility Ideographs
 
-*** Nesztamoj2 (Nesztamoj2.ttf) : SIP ***
+*** Nesztamoj2a (Nesztamoj2a.ttf) : SIP ***
+
+- (ASCII)
+- CJK Unified Ideographs (Ext.B) and these IVD
+
+*** Nesztamoj2b (Nesztamoj2b.ttf) : SIP ***
 
 - (ASCII)
 - CJK Unified Ideographs (Ext.B, Ext.C, Ext.D, Ext.E, Ext.F, Ext.I) and these IVD
@@ -108,13 +113,18 @@ KAGEシステム、Clipper, FontForgeおよびTTXを利用しています。
 
 - ASCIIほか非漢字
 - CJK統合漢字（URO, Ext-A）およびそのIVD
-- CJK互換漢字 
+- CJK互換漢字
+
+*** フォント名：Nesztamoj2（Nesztamoj2.ttf）：第2面（SIP）***
+
+- （ASCII）
+- CJK統合漢字（Ext.B）およびそのIVD
 
 *** フォント名：Nesztamoj2（Nesztamoj2.ttf）：第2面（SIP）***
 
 - （ASCII）
 - CJK統合漢字（Ext.B, C, D, E, F, I）およびそのIVD
-- CJK互換漢字補助 
+- CJK互換漢字補助
 
 *** フォント名：Nesztamoj3（Nesztamoj3.ttf）：第3面（TIP）***
 

@@ -13,7 +13,7 @@ while(<FH>){
 }
 close FH;
 
-print "<!DOCTYPE html><html><head><meta charset='utf8'><style>body{font-family:Nesztamoj,Nesztamoj2,Nesztamoj3;}span:hover{color:red;background-color:yellow;}</style></head><body>";
+print "<!DOCTYPE html><html><head><meta charset='utf8'><style>body{font-family:Nesztamoj,Nesztamoj2a,Nesztamoj2b,Nesztamoj3;}span:hover{color:red;background-color:yellow;}</style></head><body>";
 print "<h1>Nesztamoj fonts</h1>font version: 2026-08-06<br><br>";
 
 foreach(0x00 .. 0xfff){
