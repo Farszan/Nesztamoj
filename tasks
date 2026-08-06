@@ -90,21 +90,28 @@ files=`find $GLYPH -name *.svg | wc -l`
 lines=`cat $DIR/$OUT5 | wc -l`
 if [ $files -ne $lines ]; then
     echo "グリフSVGファイル数とコードポイント数が一致しません。終了します。"
-    exit
+    exit 1
 fi
 
-echo "11:フォント生成 #1"
+echo "11:GID上限の事前検証"
+perl check_gid_limits.pl
+if [ $? -ne 0 ]; then
+    echo "GID上限を超過している設定が存在するため、ビルドを中止します。"
+    exit 1
+fi
+
+echo "12:フォント生成 #1"
 perl makefont.pl
 
-echo "12:フォント生成 #2"
+echo "13:フォント生成 #2"
 perl makefont.pl 2
 
-echo "13:フォント生成 #3"
+echo "14:フォント生成 #3"
 perl makefont.pl 3
 
-echo "14:グリフリストの生成"
+echo "15:グリフリストの生成"
 perl glyphlist.pl > $BUILD/glyphlist.html
 
-echo "15:ドキュメントと生成フォントの配置"
+echo "16:ドキュメントと生成フォントの配置"
 cp $DOC/* $BUILD/
 cp $FONT/*.ttf $BUILD/
