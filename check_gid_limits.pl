@@ -12,9 +12,10 @@ unless (-e $codepoint_file) {
 }
 
 my @modes = (
-  { id => "",  name => "Nesztamoj" },
-  { id => "2", name => "Nesztamoj2" },
-  { id => "3", name => "Nesztamoj3" }
+  { id => "",   name => "Nesztamoj" },
+  { id => "2a", name => "Nesztamoj2a" },
+  { id => "2b", name => "Nesztamoj2b" },
+  { id => "3",  name => "Nesztamoj3" }
 );
 
 my $has_error = 0;
@@ -36,11 +37,16 @@ foreach my $mode (@modes) {
     $line =~ s/[\r\n]+$//; # 改行コード（CRLF / LF）を完全に除去
     next if $line eq "";   # 空行スキップ
 
-    if ($arg eq "2") {
+    if ($arg eq "2a") {
       $glyphlist{$line} = $line if $line =~ /^u00[0-9a-f]{2}$/i;
-      $glyphlist{$line} = $line if $line =~ /^u2[0-9a-f]{4}$/i;
-      $ivslist{$line}   = $line if $line =~ /^u2[0-9a-f]{4}-uf8[0-9a-f]{2}$/i;
-      $ivslist{$line}   = $line if $line =~ /^u2[0-9a-f]{4}-ue01[0-9a-f]{2}$/i;
+      $glyphlist{$line} = $line if $line =~ /^u2[0-7]{1}[0-9a-f]{3}$/i;
+      $ivslist{$line}   = $line if $line =~ /^u2[0-7]{1}[0-9a-f]{3}-uf8[0-9a-f]{2}$/i;
+      $ivslist{$line}   = $line if $line =~ /^u2[0-7]{1}[0-9a-f]{3}-ue01[0-9a-f]{2}$/i;
+    } elsif ($arg eq "2b") {
+      $glyphlist{$line} = $line if $line =~ /^u00[0-9a-f]{2}$/i;
+      $glyphlist{$line} = $line if $line =~ /^u2[8-9a-f]{1}[0-9a-f]{3}$/i;
+      $ivslist{$line}   = $line if $line =~ /^u2[8-9a-f]{1}[0-9a-f]{3}-uf8[0-9a-f]{2}$/i;
+      $ivslist{$line}   = $line if $line =~ /^u2[8-9a-f]{1}[0-9a-f]{3}-ue01[0-9a-f]{2}$/i;
     } elsif ($arg eq "3") {
       $glyphlist{$line} = $line if $line =~ /^u00[0-9a-f]{2}$/i;
       $glyphlist{$line} = $line if $line =~ /^u3[0-9a-f]{4}$/i;
@@ -56,7 +62,7 @@ foreach my $mode (@modes) {
   }
   close $fh;
 
-  $glyphlist{"u4e00"} = "u4e00" if ($arg eq "2" || $arg eq "3");
+  $glyphlist{"u4e00"} = "u4e00" if ($arg eq "2a" || $arg eq "2b" || $arg eq "3");
 
   # カウント初期化（.notdef 分で +1）
   my $current_gid = 1;

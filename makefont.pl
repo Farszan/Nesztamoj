@@ -6,8 +6,10 @@ my $version = "2026-08-06";
 my $author = "Farszan";
 
 my $fontname;
-if($ARGV[0] eq "2"){
-  $fontname = "Nesztamoj2";
+if($ARGV[0] eq "2a"){
+  $fontname = "Nesztamoj2a";
+} elsif($ARGV[0] eq "2b"){
+  $fontname = "Nesztamoj2b";
 } elsif($ARGV[0] eq "3"){
   $fontname = "Nesztamoj3";
 } else {
@@ -48,17 +50,30 @@ my %glyphlist = ();
 my %ivslist = ();
 open my $fh, "<:utf8", "$WORK_DIR/codepoint.txt";
 while(<$fh>){
-  if($ARGV[0] eq "2"){
+  if($ARGV[0] eq "2a"){
     if($_ =~ m/^(u00[0-9a-f]{2})\n$/){
       $glyphlist{$1} = $1;
     }
-    if($_ =~ m/^(u2[0-9a-f]{4})\n$/){
+    if($_ =~ m/^(u2[0-7]{1}[0-9a-f]{3})\n$/){
       $glyphlist{$1} = $1;
     }
-    if($_ =~ m/^(u2[0-9a-f]{4}-uf8[0-9a-f]{2})\n$/){
+    if($_ =~ m/^(u2[0-7]{1}[0-9a-f]{3}-uf8[0-9a-f]{2})\n$/){
       $ivslist{$1} = $1;
     }
-    if($_ =~ m/^(u2[0-9a-f]{4}-ue01[0-9a-f]{2})\n$/){
+    if($_ =~ m/^(u2[0-7]{1}[0-9a-f]{3}-ue01[0-9a-f]{2})\n$/){
+      $ivslist{$1} = $1;
+    }
+  } elsif($ARGV[0] eq "2b"){
+    if($_ =~ m/^(u00[0-9a-f]{2})\n$/){
+      $glyphlist{$1} = $1;
+    }
+    if($_ =~ m/^(u2[8-9a-f]{1}[0-9a-f]{3})\n$/){
+      $glyphlist{$1} = $1;
+    }
+    if($_ =~ m/^(u2[8-9a-f]{1}[0-9a-f]{3}-uf8[0-9a-f]{2})\n$/){
+      $ivslist{$1} = $1;
+    }
+    if($_ =~ m/^(u2[8-9a-f]{1}[0-9a-f]{3}-ue01[0-9a-f]{2})\n$/){
       $ivslist{$1} = $1;
     }
   } elsif($ARGV[0] eq "3"){
@@ -91,7 +106,9 @@ while(<$fh>){
 }
 close $fh;
 
-if($ARGV[0] eq "2"){
+if($ARGV[0] eq "2a"){
+  $glyphlist{"u4e00"} = "u4e00";
+} elsif($ARGV[0] eq "2b"){
   $glyphlist{"u4e00"} = "u4e00";
 } elsif($ARGV[0] eq "3"){
   $glyphlist{"u4e00"} = "u4e00";

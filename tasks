@@ -104,9 +104,12 @@ echo "12:フォント生成 #1"
 perl makefont.pl
 
 echo "13:フォント生成 #2"
-perl makefont.pl 2
+perl makefont.pl 2a
 
-echo "14:フォント生成 #3"
+echo "13:フォント生成 #3"
+perl makefont.pl 2b
+
+echo "14:フォント生成 #4"
 perl makefont.pl 3
 
 echo "15:グリフリストの生成"
