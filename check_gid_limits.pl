@@ -87,15 +87,16 @@ foreach my $mode (@modes) {
       my $base_svg = "$base_dir/$ucswithoutivs.svg";
 
       foreach my $ucswithivs (sort @{$base_to_ivs{$ucswithoutivs}}) {
-        my $target_name = $ivslist{$ucswithivs};
-        my $dir = "$GLYPH_DIR/" . substr($target_name, 0, length($target_name)-10) . "/" . substr($target_name, 0, length($target_name)-9);
+        my @temp = split(/-/, $ucswithivs);
+        my $base_part = $temp[0];
+        my $dir = "$GLYPH_DIR/" . substr($base_part, 0, length($base_part)-3) . "/" . substr($base_part, 0, length($base_part)-2);
         my $target_svg = "$dir/$ucswithivs.svg";
 
-        next if (-e $target_svg && -e $base_svg && !`diff $target_svg $base_svg`);
+        next if (-e $target_svg && -e $base_svg && !`diff "$target_svg" "$base_svg" 2>/dev/null`);
 
         my $matched = 0;
         foreach my $prev_svg (keys %seen_svgs) {
-          if (-e $target_svg && !`diff $target_svg $prev_svg`) {
+          if (-e $target_svg && !`diff "$target_svg" "$prev_svg" 2>/dev/null`) {
             $matched = 1;
             last;
           }

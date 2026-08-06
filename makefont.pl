@@ -175,12 +175,13 @@ if(scalar(keys(%ivslist)) > 0){
       my $uv = "0x".substr($temp[0], 1);
       my $uvs = "0x".substr($temp[1], 1);
       
-      my $name = $ivslist{$ucswithivs};
-      my $dir = "$GLYPH_DIR/".substr($name,0,length($name)-10)."/".substr($name,0,length($name)-9);
+      # IVSの基底文字名 (u9089) からディレクトリ階層を計算
+      my $base_part = $temp[0];
+      my $dir = "$GLYPH_DIR/".substr($base_part,0,length($base_part)-3)."/".substr($base_part,0,length($base_part)-2);
       my $target_svg = "$dir/$ucswithivs.svg";
 
       # A. 基底文字と比較（一致していれば基底文字の cpname を利用）
-      if (!`diff $target_svg $base_svg`) {
+      if (-e $target_svg && -e $base_svg && !`diff "$target_svg" "$base_svg" 2>/dev/null`) {
         print $fh2 "<map uvs=\"$uvs\" uv=\"$uv\" name=\"$base_cpname\"/>\n";
         next;
       }
@@ -188,7 +189,7 @@ if(scalar(keys(%ivslist)) > 0){
       # B. 同一基底文字の先行 IVS と比較（一致していればその GID/cpname を再利用）
       my $matched_cpname = undef;
       foreach my $prev_svg (keys %seen_svgs) {
-        if (!`diff $target_svg $prev_svg`) {
+        if (-e $target_svg && !`diff "$target_svg" "$prev_svg" 2>/dev/null`) {
           $matched_cpname = $seen_svgs{$prev_svg};
           last;
         }
