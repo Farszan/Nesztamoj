@@ -52,7 +52,7 @@ foreach my $mode (@modes) {
   }
   close $fh;
 
-  $glyphlist{"u4e00"} = "u4e00" if ($arg eq "2" || $arg eq "3");[cite: 2]
+  $glyphlist{"u4e00"} = "u4e00" if ($arg eq "2" || $arg eq "3");
 
   # カウント初期化（.notdef 分で +1）
   my $current_gid = 1;
@@ -91,11 +91,11 @@ foreach my $mode (@modes) {
         my $dir = "$GLYPH_DIR/" . substr($target_name, 0, length($target_name)-10) . "/" . substr($target_name, 0, length($target_name)-9);
         my $target_svg = "$dir/$ucswithivs.svg";
 
-        next if (-e $target_svg && -e $base_svg && !`diff $target_svg $base_svg`);[cite: 2]
+        next if (-e $target_svg && -e $base_svg && !`diff $target_svg $base_svg`);
 
         my $matched = 0;
         foreach my $prev_svg (keys %seen_svgs) {
-          if (-e $target_svg && !`diff $target_svg $prev_svg`) {[cite: 2]
+          if (-e $target_svg && !`diff $target_svg $prev_svg`) {
             $matched = 1;
             last;
           }
