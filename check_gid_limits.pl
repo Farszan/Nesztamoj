@@ -32,22 +32,26 @@ foreach my $mode (@modes) {
 
   # 1. codepoint.txt のパース
   open my $fh, "<:utf8", $codepoint_file or die "Cannot open $codepoint_file: $!";
-  while (<$fh>) {
+  while (my $line = <$fh>) {
+    $line =~ s/[\r\n]+$//; # 改行コード（CRLF / LF）を完全に除去
+    next if $line eq "";   # 空行スキップ
+
     if ($arg eq "2") {
-      $glyphlist{$1} = $1 if /^u00[0-9a-f]{2}$/i;
-      $glyphlist{$1} = $1 if /^u2[0-9a-f]{4}$/i;
-      $ivslist{$1}   = $1 if /^u2[0-9a-f]{4}-uf8[0-9a-f]{2}$/i;
-      $ivslist{$1}   = $1 if /^u2[0-9a-f]{4}-ue01[0-9a-f]{2}$/i;
+      $glyphlist{$line} = $line if $line =~ /^u00[0-9a-f]{2}$/i;
+      $glyphlist{$line} = $line if $line =~ /^u2[0-9a-f]{4}$/i;
+      $ivslist{$line}   = $line if $line =~ /^u2[0-9a-f]{4}-uf8[0-9a-f]{2}$/i;
+      $ivslist{$line}   = $line if $line =~ /^u2[0-9a-f]{4}-ue01[0-9a-f]{2}$/i;
     } elsif ($arg eq "3") {
-      $glyphlist{$1} = $1 if /^u00[0-9a-f]{2}$/i;
-      $glyphlist{$1} = $1 if /^u3[0-9a-f]{4}$/i;
-      $ivslist{$1}   = $1 if /^u3[0-9a-f]{4}-uf8[0-9a-f]{2}$/i;
-      $ivslist{$1}   = $1 if /^u3[0-9a-f]{4}-ue01[0-9a-f]{2}$/i;
+      $glyphlist{$line} = $line if $line =~ /^u00[0-9a-f]{2}$/i;
+      $glyphlist{$line} = $line if $line =~ /^u3[0-9a-f]{4}$/i;
+      $ivslist{$line}   = $line if $line =~ /^u3[0-9a-f]{4}-uf8[0-9a-f]{2}$/i;
+      $ivslist{$line}   = $line if $line =~ /^u3[0-9a-f]{4}-ue01[0-9a-f]{2}$/i;
     } else {
-      $glyphlist{$1} = $1 if /^u[0-9a-f]{4}$/i;
-      $glyphlist{$1} = $1 if /^u1[0-9a-f]{4}$/i;
-      $ivslist{$1}   = $1 if /^u[0-9a-f]{4}-uf8[0-9a-f]{2}$/i;
-      $ivslist{$1}   = $1 if /^u[0-9a-f]{4}-ue01[0-9a-f]{2}$/i;
+      # 標準モード: BMP(4桁 hex) および Plane 1 (10000-1FFFF)
+      $glyphlist{$line} = $line if $line =~ /^u[0-9a-f]{4}$/i;
+      $glyphlist{$line} = $line if $line =~ /^u1[0-9a-f]{4}$/i;
+      $ivslist{$line}   = $line if $line =~ /^u[0-9a-f]{4}-uf8[0-9a-f]{2}$/i;
+      $ivslist{$line}   = $line if $line =~ /^u[0-9a-f]{4}-ue01[0-9a-f]{2}$/i;
     }
   }
   close $fh;
@@ -92,6 +96,7 @@ foreach my $mode (@modes) {
         my $dir = "$GLYPH_DIR/" . substr($base_part, 0, length($base_part)-3) . "/" . substr($base_part, 0, length($base_part)-2);
         my $target_svg = "$dir/$ucswithivs.svg";
 
+        # 基底文字のSVGと同一なら差分なし（PUA追加不要）
         next if (-e $target_svg && -e $base_svg && !`diff "$target_svg" "$base_svg" 2>/dev/null`);
 
         my $matched = 0;
