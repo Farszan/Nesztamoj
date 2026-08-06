@@ -1,2 +1,2 @@
 https://raw.githubusercontent.com/Farszan/ExtendedGlyphs/main/Gen.txt
-https://raw.githubusercontent.com/Farszan/ExtendedGlyphs/main/Rod.txt
+https://raw.githubusercontent.com/Farszan/ExtendedGlyphs/main/Rod_OverrideIVD.txt

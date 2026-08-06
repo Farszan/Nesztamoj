@@ -10,10 +10,8 @@ TEMP="temp.txt"
 ERR="stderr.txt"
 
 URL1="https://www.unicode.org/Public/17.0.0/ucd/UnicodeData.txt"
-URL2="https://unicode.org/ivd/data/2025-07-14/IVD_Sequences.txt"
 
 DATA1="UnicodeData.txt"
-DATA2="IVD_Sequences.txt"
 DATA3="ExtendedGlyphs.txt"
 
 KEYWORDS="keywords.txt"
@@ -30,9 +28,6 @@ rm -f $DIR/$ERR
 echo "01:unicode.org からデータの取得"
 if [ ! -e $DIR/$DATA1 ]; then
   wget -nv $URL1 -O $DIR/$DATA1 2>> $DIR/$ERR
-fi
-if [ ! -e $DIR/$DATA2 ]; then
-  wget -nv $URL2 -O $DIR/$DATA2 2>> $DIR/$ERR
 fi
 
 echo "02:拡張グループファイルの取得と結合"
@@ -63,12 +58,7 @@ echo "05:コードポイントリスト(UCS)の生成"
 rm -f $DIR/$OUT5
 python3 makecodepoint.py $DIR/$OUT3 $DIR/$OUT5
 
-echo "06:コードポイントリスト(IVS)の生成"
-grep -v -e "^#" $DIR/$DATA2 | awk -F'[; ]' '{printf "u%s-u%s\n",tolower($1),tolower($2)}' > $DIR/$TEMP
-sort $DIR/$TEMP | uniq >> $DIR/$OUT5
-rm -f $DIR/$TEMP
-
-echo "07:追加コードポイントの取得（重複排除）"
+echo "06:追加コードポイントの取得（重複排除）"
 if [ -f "$DIR/$DATA3" ]; then
   # 1列目を抽出し、コメント行・空行・CRを除去して一時ファイルへ出力
   awk -F';' '{print $1}' "$DIR/$DATA3" | grep -v '^\s*#' | sed 's/\r//g' | sed '/^\s*$/d' > $DIR/ext_temp.txt
@@ -79,13 +69,13 @@ if [ -f "$DIR/$DATA3" ]; then
   rm -f $DIR/ext_temp.txt
 fi
 
-echo "08:コードポイントリストにASCIIを追加"
+echo "07:コードポイントリストにASCIIを追加"
 cat $ASCII >> $DIR/$OUT5
 
-echo "09:グリフSVGファイルの取得"
+echo "08:グリフSVGファイルの取得"
 python3 getglyphs.py $GLYPH $DIR/$OUT5 $DIR/$DATA3
 
-echo "10:グリフSVGファイルの確認"
+echo "09:グリフSVGファイルの確認"
 files=`find $GLYPH -name *.svg | wc -l`
 lines=`cat $DIR/$OUT5 | wc -l`
 if [ $files -ne $lines ]; then
@@ -93,28 +83,28 @@ if [ $files -ne $lines ]; then
     exit 1
 fi
 
-echo "11:GID上限の事前検証"
+echo "10:GID上限の事前検証"
 perl check_gid_limits.pl
 if [ $? -ne 0 ]; then
     echo "GID上限を超過している設定が存在するため、ビルドを中止します。"
     exit 1
 fi
 
-echo "12:フォント生成 #1"
+echo "11:フォント生成 #1"
 perl makefont.pl
 
-echo "13:フォント生成 #2"
+echo "12:フォント生成 #2"
 perl makefont.pl 2a
 
-echo "14:フォント生成 #3"
+echo "13:フォント生成 #3"
 perl makefont.pl 2b
 
-echo "15:フォント生成 #4"
+echo "14:フォント生成 #4"
 perl makefont.pl 3
 
-echo "16:グリフリストの生成"
+echo "15:グリフリストの生成"
 perl glyphlist.pl > $BUILD/glyphlist.html
 
-echo "17:ドキュメントと生成フォントの配置"
+echo "16:ドキュメントと生成フォントの配置"
 cp $DOC/* $BUILD/
 cp $FONT/*.ttf $BUILD/

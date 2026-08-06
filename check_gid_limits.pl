@@ -40,23 +40,19 @@ foreach my $mode (@modes) {
     if ($arg eq "2a") {
       $glyphlist{$line} = $line if $line =~ /^u00[0-9a-f]{2}$/i;
       $glyphlist{$line} = $line if $line =~ /^u2[0-7]{1}[0-9a-f]{3}$/i;
-      $ivslist{$line}   = $line if $line =~ /^u2[0-7]{1}[0-9a-f]{3}-uf8[0-9a-f]{2}$/i;
       $ivslist{$line}   = $line if $line =~ /^u2[0-7]{1}[0-9a-f]{3}-ue01[0-9a-f]{2}$/i;
     } elsif ($arg eq "2b") {
       $glyphlist{$line} = $line if $line =~ /^u00[0-9a-f]{2}$/i;
       $glyphlist{$line} = $line if $line =~ /^u2[8-9a-f]{1}[0-9a-f]{3}$/i;
-      $ivslist{$line}   = $line if $line =~ /^u2[8-9a-f]{1}[0-9a-f]{3}-uf8[0-9a-f]{2}$/i;
       $ivslist{$line}   = $line if $line =~ /^u2[8-9a-f]{1}[0-9a-f]{3}-ue01[0-9a-f]{2}$/i;
     } elsif ($arg eq "3") {
       $glyphlist{$line} = $line if $line =~ /^u00[0-9a-f]{2}$/i;
       $glyphlist{$line} = $line if $line =~ /^u3[0-9a-f]{4}$/i;
-      $ivslist{$line}   = $line if $line =~ /^u3[0-9a-f]{4}-uf8[0-9a-f]{2}$/i;
       $ivslist{$line}   = $line if $line =~ /^u3[0-9a-f]{4}-ue01[0-9a-f]{2}$/i;
     } else {
       # 標準モード: BMP(4桁 hex) および Plane 1 (10000-1FFFF)
       $glyphlist{$line} = $line if $line =~ /^u[0-9a-f]{4}$/i;
       $glyphlist{$line} = $line if $line =~ /^u1[0-9a-f]{4}$/i;
-      $ivslist{$line}   = $line if $line =~ /^u[0-9a-f]{4}-uf8[0-9a-f]{2}$/i;
       $ivslist{$line}   = $line if $line =~ /^u[0-9a-f]{4}-ue01[0-9a-f]{2}$/i;
     }
   }

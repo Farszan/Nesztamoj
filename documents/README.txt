@@ -26,7 +26,6 @@ List of included characters
                               472 chars (fully implemented)
 - U+2F800 .. U+2FA1D CJK Compatibility Ideographs Supplement
                               542 chars (fully implemented)
-- IVD*    .. ver. 2025-07-14 29,635 chars (fully implemented)
 
 IVD: Ideographic Variation Database[6]
 
@@ -36,24 +35,24 @@ Nesztamoj fonts are divided into three .ttf files as follows.
 
 - ASCII and non-kanji
 - non-kanji (Nech)
-- CJK Unified Ideographs (URO, Ext-A) and these IVD
+- CJK Unified Ideographs (URO, Ext-A) and these Roḏ
 - CJK Compatibility Ideographs
 
 *** Nesztamoj2a (Nesztamoj2a.ttf) : SIP ***
 
 - (ASCII)
-- CJK Unified Ideographs (Ext.B) and these IVD
+- CJK Unified Ideographs (Ext.B) and these Roḏ
 
 *** Nesztamoj2b (Nesztamoj2b.ttf) : SIP ***
 
 - (ASCII)
-- CJK Unified Ideographs (Ext.B, Ext.C, Ext.D, Ext.E, Ext.F, Ext.I) and these IVD
+- CJK Unified Ideographs (Ext.B, Ext.C, Ext.D, Ext.E, Ext.F, Ext.I) and these Roḏ
 - CJK Compatibility Ideographs Supplement
 
 *** Nesztamoj3 (Nesztamoj3.ttf) : TIP ***
 
 - (ASCII)
-- CJK Unified Ideographs (Ext.G, Ext.H, Ext.J) and these IVD
+- CJK Unified Ideographs (Ext.G, Ext.H, Ext.J) and these Roḏ
 
 
 Links
@@ -112,24 +111,24 @@ KAGEシステム、Clipper, FontForgeおよびTTXを利用しています。
 *** フォント名：Nesztamoj（Nesztamoj.ttf）：第0面（BMP）、第1面（SMP）***
 
 - ASCIIほか非漢字
-- CJK統合漢字（URO, Ext-A）およびそのIVD
+- CJK統合漢字（URO, Ext-A）およびそのRoḏ-IVD
 - CJK互換漢字
 
 *** フォント名：Nesztamoj2（Nesztamoj2.ttf）：第2面（SIP）***
 
 - （ASCII）
-- CJK統合漢字（Ext.B）およびそのIVD
+- CJK統合漢字（Ext.B）およびそのRoḏ-IVD
 
 *** フォント名：Nesztamoj2（Nesztamoj2.ttf）：第2面（SIP）***
 
 - （ASCII）
-- CJK統合漢字（Ext.B, C, D, E, F, I）およびそのIVD
+- CJK統合漢字（Ext.B, C, D, E, F, I）およびそのRoḏ-IVD
 - CJK互換漢字補助
 
 *** フォント名：Nesztamoj3（Nesztamoj3.ttf）：第3面（TIP）***
 
 - （ASCII）
--  CJK統合漢字（Ext.G, H, J）およびIVD
+-  CJK統合漢字（Ext.G, H, J）およびRoḏ-IVD
 
 
 グリフウィキ（GlyphWiki）について
